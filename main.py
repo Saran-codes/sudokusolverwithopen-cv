@@ -1,5 +1,12 @@
 import cv2 as cv2
 import numpy as np
+from tensorflow.keras.models import load_model
+
+
+def loadmodel():
+    model = load_model('model/my_model.h5')
+    return model
+
 
 cap = cv2.VideoCapture(0)
 
@@ -93,16 +100,16 @@ while True:
     cols = []
     for r in rows:
         cols.append(cv2.rotate(r, cv2.ROTATE_90_CLOCKWISE))
-        for c in cols:
-            cut = np.array_split(c, 9)
-            for b in cut:
-                digits.append(b)
+    for c in cols:
+        cut = np.array_split(c, 9)
+        for b in cut:
+            digits.append(b)
 
     numbers = []
 
     for d in digits:
         numbers.append(cv2.rotate(d, cv2.ROTATE_90_COUNTERCLOCKWISE))
-
+    '''
     cv2.imshow("0", numbers[0])
     cv2.imshow("1", numbers[1])
     cv2.imshow("2", numbers[2])
@@ -183,7 +190,13 @@ while True:
     cv2.imshow("78", numbers[78])
     cv2.imshow("79", numbers[79])
     cv2.imshow("80", numbers[80])
+    cv2.imshow("100", numbers[100])
+    '''
 
+
+    cnn = loadmodel()
+    print(len(digits))
+    print(len(numbers))
 
 
 

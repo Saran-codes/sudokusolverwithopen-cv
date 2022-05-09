@@ -27,22 +27,18 @@ while True:
     # select the largest contour
     max_cnt = max(contours, key=cv2.contourArea)
 
-    # check if the contour area is greater than 250 ** 2 pixel sq.
-    if cv2.contourArea(max_cnt) < 250 * 250:
-        # if not, then return None
-        print("none")
-
+    print(max_cnt)
     # create black mask
     mask = np.zeros(gray.shape, np.uint8)
-    # fill the area inside contour with white pixels
+    # filling the area inside contour with white pixels
     cv2.drawContours(mask, [max_cnt], 0, 255, -1)
-    # fill the rest area with black pixels
+    # filling the rest area with black pixels
     cv2.drawContours(mask, [max_cnt], 0, 0, 2)
     cv2.drawContours(self, contours, -1, (0, 255, 0), 3)
 
     # create a white mask
     out = 255 * np.ones_like(gray)
-    # copy the area from the original image which is marked by white pixels from the black mask.
+    # getting the original image which is marked by white pixels from the black mask.
     out[mask == 255] = gray[mask == 255]
     # return the generated white mask and largest contour
     # print(max_cnt)
@@ -75,9 +71,9 @@ while True:
                     [box_width - 1, box_height - 1],
                     [0, box_height - 1]], dtype=np.float32)
 
-    # generate the transformation matrix
+    # transformation matrix
     transform_matrix = cv2.getPerspectiveTransform(bounding_rect, dst)
-    # apply the transformation matrix to get the primary sudoku image
+    # apply the transformation matrix to get the warped sudoku image
     warped_img = cv2.warpPerspective(out, transform_matrix, (box_width, box_height))
 
     cv2.imshow("fjv", warped_img)
@@ -196,7 +192,7 @@ while True:
 
     cnn = loadmodel()
 
-    print(len(numbers))
+
 
 
 
